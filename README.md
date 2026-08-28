@@ -1,6 +1,6 @@
 # nft-gate
 
-[![npm](https://img.shields.io/npm/v/%40meddleware%2Fnft-gate-gateway-workers)](https://www.npmjs.com/package/@meddleware/nft-gate-gateway-workers)
+[![npm](https://img.shields.io/npm/v/%40meddleware%2Fnft-gate-gateway-workers)](https://www.npmjs.com/package/@meddleware/nft-gate-gateway)
 [![Crates.io](https://img.shields.io/crates/v/nft-gate-gateway)](https://crates.io/crates/nft-gate-gateway)
 [![License: 0BSD](https://img.shields.io/badge/license-0BSD-blue)](LICENSE)
 
@@ -10,7 +10,7 @@ Two wire-identical implementations are provided. Choose one based on your deploy
 
 | Implementation | Directory | Distributed as | Deploy target | State backend |
 | --- | --- | --- | --- | --- |
-| Cloudflare Workers | [`gateway-workers/`](gateway-workers/) | [npm package](https://www.npmjs.com/package/@meddleware/nft-gate-gateway-workers) | Wrangler deploy | Durable Objects or KV |
+| Cloudflare Workers | [`gateway-workers/`](gateway-workers/) | [npm package](https://www.npmjs.com/package/@meddleware/nft-gate-gateway) | Wrangler deploy | Durable Objects or KV |
 | Rust / Axum | [`gateway-rust/`](gateway-rust/) | [crates.io](https://crates.io/crates/nft-gate-gateway) / Docker | Docker / k8s | In-memory or Redis |
 
 Both implementations serve the same wire protocol and verify the same [conformance vectors](conformance/).

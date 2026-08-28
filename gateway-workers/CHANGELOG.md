@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `@meddleware/nft-gate-gateway-workers` are documented here.
+All notable changes to `@meddleware/nft-gate-gateway` are documented here.
 
 ## [0.0.1] - 2026-08-27
 

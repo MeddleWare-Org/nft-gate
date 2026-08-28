@@ -1,6 +1,6 @@
-# @meddleware/nft-gate-gateway-workers
+# @meddleware/nft-gate-gateway
 
-[![npm](https://img.shields.io/npm/v/%40meddleware%2Fnft-gate-gateway-workers)](https://www.npmjs.com/package/@meddleware/nft-gate-gateway-workers)
+[![npm](https://img.shields.io/npm/v/%40meddleware%2Fnft-gate-gateway-workers)](https://www.npmjs.com/package/@meddleware/nft-gate-gateway)
 [![License: 0BSD](https://img.shields.io/badge/license-0BSD-blue)](LICENSE)
 
 Cloudflare Workers implementation of the [nft-gate](../README.md) NFT-gated reverse proxy.
@@ -32,7 +32,7 @@ npm install
 Alternatively, the package is published to npm for reference:
 
 ```bash
-npm install @meddleware/nft-gate-gateway-workers
+npm install @meddleware/nft-gate-gateway
 ```
 
 ### 2. Configure `wrangler.toml`
