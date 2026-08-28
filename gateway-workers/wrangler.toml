@@ -1,0 +1,83 @@
+# nft-gate-gateway — Cloudflare Workers deployment.
+#
+# Wire-identical to the Rust gateway (../gateway). Bind it to the SAME public hostname the
+# Rust gateway serves (see [routes] below) to switch implementations with nothing else changing.
+#
+# OPERATOR SETUP — run these once before deploying, then never touch them again:
+#
+#   UPSTREAM_URL (required — your CF-Access-locked relay/upstream origin):
+#     wrangler secret put UPSTREAM_URL
+#     Value: the full origin URL (e.g. https://your-origin.example.com)
+#     This is kept as a secret so it does not appear in this public file and is
+#     not overwritten by `wrangler deploy`.
+#
+#   NFT_TYPE (required — set after publishing your access_gate contract on-chain):
+#     wrangler secret put NFT_TYPE
+#     Value: "<PACKAGE_ID>::access_gate::SoulboundAccessNFT"
+#     Update this whenever you redeploy the on-chain contract.
+#
+#   UPSTREAM_AUTH_HEADERS (required for CF-Access-locked origin):
+#     wrangler secret put UPSTREAM_AUTH_HEADERS
+#     Value: "CF-Access-Client-Id: <id>, CF-Access-Client-Secret: <secret>"
+#     Obtain from: Cloudflare Zero Trust → Access → Service Tokens → create token
+#     The Access policy on your origin hostname must allow this token.
+#
+#   SUI_RPC_AUTH_HEADER (optional — only if using an authenticated/private RPC):
+#     wrangler secret put SUI_RPC_AUTH_HEADER
+#     Value: "Authorization: Bearer <token>"
+#
+#   CF_ANALYTICS_TOKEN (optional — only if QUOTA_GUARD_ENABLED=true):
+#     wrangler secret put CF_ANALYTICS_TOKEN
+#   CF_ACCOUNT_ID (optional — only if QUOTA_GUARD_ENABLED=true):
+#     wrangler secret put CF_ACCOUNT_ID
+
+name = "nft-gate-gateway"
+main = "src/index.ts"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ── config (parity with the Rust gateway env; see README.md for the mapping) ─────────────────
+[vars]
+# UPSTREAM_URL and NFT_TYPE are set via `wrangler secret put` (see above) so that
+# deployment-specific values never appear in this public file and are never overwritten
+# by `wrangler deploy`. Do not add them here.
+
+# Public fullnode — safe to keep as a plain var (no sensitive information).
+SUI_RPC_URL = "https://fullnode.testnet.sui.io:443"
+
+GATE_ID = ""         # operator: set to the access_gate registry object ID (single-registry mode)
+SINGLE_USE = "false"
+PUBLIC_PATHS = "/v1/tip-config"
+RATE_LIMIT_PER_MIN = "30"
+MAX_BODY_BYTES = "262144"
+CHALLENGE_TTL_SECS = "300"
+OWNERSHIP_CACHE_TTL_MS = "0"
+# Workers-specific:
+NONCE_BACKEND = "durable-object" # "durable-object" (default) | "kv"
+NONCE_SHARD = "region"           # "region" (default) | "global"
+NONCE_MAX_ENTRIES = "1000000"
+QUOTA_GUARD_ENABLED = "false"
+
+# ── nonce store + rate limiter: region-sharded, SQLite-backed Durable Objects (free-tier) ────
+[[durable_objects.bindings]]
+name = "NONCE_STATE"
+class_name = "NonceRateState"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["NonceRateState"]
+
+# ── KV backend (only needed when NONCE_BACKEND=kv) ────────────────────────────────────────────
+# [[kv_namespaces]]
+# binding = "NONCE_KV"
+# id = "<KV_NAMESPACE_ID>"   # create with: wrangler kv namespace create NONCE_KV
+
+# ── route: Worker serves as the public NFT-gated relay endpoint ───────────────────────────────
+# operator: uncomment and fill in after creating the Worker route in the CF dashboard
+# [[routes]]
+# pattern = "nft-gate.example.com/*"
+# zone_name = "example.com"
+
+# ── optional quota guard (needs QUOTA_GUARD_ENABLED=true + the secrets above) ────────────────
+# [triggers]
+# crons = ["*/15 * * * *"]

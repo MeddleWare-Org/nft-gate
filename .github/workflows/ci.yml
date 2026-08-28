@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  rust-ci:
+    name: Rust gateway (gateway-rust)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: gateway-rust
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "gateway-rust -> target"
+          # Only save the cache on main-branch pushes to avoid saturating the
+          # GitHub Actions cache upload bandwidth on every PR run.
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Format check
+        run: cargo fmt --check
+
+      - name: Clippy
+        run: cargo clippy -- -D warnings
+
+      - name: Test
+        run: cargo test
+      # Release build is intentionally omitted: cargo test already verifies
+      # compilation. The release binary is built inside the Dockerfile.
+
+  workers-ci:
+    name: Workers gateway (gateway-workers)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: gateway-workers
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run type-check
+
+      - name: Test
+        run: npm test
+
+  trivy-scan:
+    name: Trivy (gateway-rust Dockerfile)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Scan Dockerfile
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: config
+          scan-ref: gateway-rust
+          version: v0.74.0
+          scanners: misconfig,secret
+          severity: CRITICAL,HIGH
+          exit-code: "1"
+          ignore-unfixed: true

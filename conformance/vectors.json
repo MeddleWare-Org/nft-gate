@@ -1,0 +1,42 @@
+{
+  "description": "Golden wire-format vectors shared by the Rust and Workers gateways. Each entry is a real Sui personal-message signature over `nft-gate:access:<nonce>`; a verifier must recover `address` and accept it. Regenerate with: node gateway-workers/scripts/gen-vectors.mjs > conformance/vectors.json",
+  "personalMessage": {
+    "nonce": "GOLDEN-NONCE-123",
+    "messageUtf8": "nft-gate:access:GOLDEN-NONCE-123",
+    "messageBytesBase64": "bmZ0LWdhdGU6YWNjZXNzOkdPTERFTi1OT05DRS0xMjM="
+  },
+  "proofDecode": {
+    "token": "eyJhZGRyZXNzIjoiMHgxIiwibm9uY2UiOiJuIiwic2lnbmF0dXJlIjoicyJ9",
+    "expect": {
+      "address": "0x1",
+      "nonce": "n",
+      "signature": "s"
+    }
+  },
+  "signatures": [
+    {
+      "scheme": "ed25519",
+      "address": "0xa0ccc8bcc83f6c628340134f8546a21e0618fd1aaa02432bba454c4a2c2233da",
+      "nonce": "GOLDEN-NONCE-123",
+      "signature": "AMbu0NHeMayTIgBqOim2lSCohB02rs8LiJA1vqLkE3qihvQJK4B5oEuElNkn5gxbOx8lcs5+m/Aaed5H/CeBpAfqSmxj4pxSCr71UHsTLsX5lUd2rr6+e5JCHuppFEbSLA==",
+      "proofToken": "eyJhZGRyZXNzIjoiMHhhMGNjYzhiY2M4M2Y2YzYyODM0MDEzNGY4NTQ2YTIxZTA2MThmZDFhYWEwMjQzMmJiYTQ1NGM0YTJjMjIzM2RhIiwibm9uY2UiOiJHT0xERU4tTk9OQ0UtMTIzIiwic2lnbmF0dXJlIjoiQU1idTBOSGVNYXlUSWdCcU9pbTJsU0NvaEIwMnJzOExpSkExdnFMa0UzcWlodlFKSzRCNW9FdUVsTmtuNWd4Yk94OGxjczUrbS9BYWVkNUgvQ2VCcEFmcVNteGo0cHhTQ3I3MVVIc1RMc1g1bFVkMnJyNitlNUpDSHVwcEZFYlNMQT09In0=",
+      "expect": true
+    },
+    {
+      "scheme": "secp256k1",
+      "address": "0xff54162ff5cf6c25b2f6985ef274f1709ccf58175188a572ecfea4b1423c8ca0",
+      "nonce": "GOLDEN-NONCE-123",
+      "signature": "Abqtk1+ADD3p1Fo0glck814uYjkPTewQYQ0obvomXMCVTowBByXwf1yeAq/ocjxg+llZ7N75raPsBlrhWyAyf7MCVrMoswyL9YOeJAWHR4eUCL2zYkHcnC58YZ+qErKSCWc=",
+      "proofToken": "eyJhZGRyZXNzIjoiMHhmZjU0MTYyZmY1Y2Y2YzI1YjJmNjk4NWVmMjc0ZjE3MDljY2Y1ODE3NTE4OGE1NzJlY2ZlYTRiMTQyM2M4Y2EwIiwibm9uY2UiOiJHT0xERU4tTk9OQ0UtMTIzIiwic2lnbmF0dXJlIjoiQWJxdGsxK0FERDNwMUZvMGdsY2s4MTR1WWprUFRld1FZUTBvYnZvbVhNQ1ZUb3dCQnlYd2YxeWVBcS9vY2p4ZytsbFo3Tjc1cmFQc0JscmhXeUF5ZjdNQ1ZyTW9zd3lMOVlPZUpBV0hSNGVVQ0wyellrSGNuQzU4WVorcUVyS1NDV2M9In0=",
+      "expect": true
+    },
+    {
+      "scheme": "secp256r1",
+      "address": "0xaf8a25b8923b42abaac0cc3d594583102ed122e6934a69bc3b6e93db36d0e9dc",
+      "nonce": "GOLDEN-NONCE-123",
+      "signature": "AlbjqC3TD5uR0+MxXt3vfN4k2b3ceV9XvAVBMwgxlepxWlMWk32Is4jPLktJQty3DRMlMEIpjCUWZw+G+yv30Q4DIJwxe2N5Nd09ocVPY0ld+zH5fSk98IVxAyBZXJqsuD8=",
+      "proofToken": "eyJhZGRyZXNzIjoiMHhhZjhhMjViODkyM2I0MmFiYWFjMGNjM2Q1OTQ1ODMxMDJlZDEyMmU2OTM0YTY5YmMzYjZlOTNkYjM2ZDBlOWRjIiwibm9uY2UiOiJHT0xERU4tTk9OQ0UtMTIzIiwic2lnbmF0dXJlIjoiQWxianFDM1RENXVSMCtNeFh0M3ZmTjRrMmIzY2VWOVh2QVZCTXdneGxlcHhXbE1XazMySXM0alBMa3RKUXR5M0RSTWxNRUlwakNVV1p3K0creXYzMFE0RElKd3hlMk41TmQwOW9jVlBZMGxkK3pINWZTazk4SVZ4QXlCWlhKcXN1RDg9In0=",
+      "expect": true
+    }
+  ]
+}

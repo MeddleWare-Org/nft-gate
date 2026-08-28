@@ -1,0 +1,28 @@
+# Rust build output
+target/
+
+# Node / Workers
+node_modules/
+dist/
+.wrangler/
+*.tsbuildinfo
+
+# Test output
+coverage/
+.vitest-cache/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
