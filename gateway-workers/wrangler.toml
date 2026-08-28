@@ -45,8 +45,8 @@ compatibility_flags = ["nodejs_compat"]
 # Public fullnode — safe to keep as a plain var (no sensitive information).
 SUI_RPC_URL = "https://fullnode.testnet.sui.io:443"
 
-GATE_ID = ""         # operator: set to the access_gate registry object ID (single-registry mode)
-SINGLE_USE = "false"
+GATE_ID = "0x0485c1fa80e4c355c85ab99c0281a328d8fb5c60ac50ab64f10be0f8be792aba"
+SINGLE_USE = "true"
 PUBLIC_PATHS = "/v1/tip-config"
 RATE_LIMIT_PER_MIN = "30"
 MAX_BODY_BYTES = "262144"

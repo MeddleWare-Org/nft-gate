@@ -1,6 +1,6 @@
 {
   "name": "@meddleware/nft-gate-gateway",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "Cloudflare Workers implementation of the nft-gate gateway: a wire-identical, drop-in sibling of the Rust gateway that gates any HTTP upstream behind an access_gate NFT.",
   "license": "0BSD",
@@ -21,7 +21,7 @@
     "generate:vectors": "node scripts/gen-vectors.mjs > ../conformance/vectors.json"
   },
   "dependencies": {
-    "@meddleware/nft-gate-client": "^0.0.1",
+    "@meddleware/nft-gate-client": "^0.0.2",
     "@noble/curves": "~2.4.0",
     "@noble/hashes": "~2.4.0"
   },
