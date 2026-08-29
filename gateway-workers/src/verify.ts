@@ -30,6 +30,7 @@ export function deriveAddress(flag: number, pk: Uint8Array): string {
   return '0x' + bytesToHex(blake2b256(concatBytes(Uint8Array.from([flag]), pk)))
 }
 
+/** Normalise a Sui address to lowercase, `0x`-prefixed, zero-padded to 64 hex digits. */
 export function normalizeAddress(a: string): string {
   const s = a.trim().replace(/^0x/i, '').toLowerCase()
   return '0x' + s.padStart(64, '0')
@@ -128,6 +129,7 @@ export interface ChainQuery {
   ): Promise<boolean>
 }
 
+/** The reason a request was rejected by {@link verifyAccessRequest}. Mirror of Rust `Denied`. */
 export type Denied =
   | 'BadProof'
   | 'BadSignature'
@@ -136,6 +138,7 @@ export type Denied =
   | 'ConsumeMissing'
   | 'ChainError'
 
+/** A short, client-visible description of why access was denied. */
 export function deniedReason(d: Denied): string {
   switch (d) {
     case 'BadProof':
@@ -153,6 +156,7 @@ export function deniedReason(d: Denied): string {
   }
 }
 
+/** Result of {@link verifyAccessRequest}: the verified address on success, or a {@link Denied} reason. */
 export type VerifyResult = { ok: true; address: string } | { ok: false; denied: Denied }
 
 /**

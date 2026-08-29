@@ -184,8 +184,12 @@ impl RedisNonceStore {
 
 // ── Unified async enum ───────────────────────────────────────────────────────────
 
+/// Unified async nonce store — either the process-local [`InMemoryNonceStore`] or the
+/// shared [`RedisNonceStore`]. Selected at startup by the presence of `REDIS_URL`.
 pub enum NonceStore {
+    /// Process-local store (correct only at `replicas: 1`).
     InMemory(InMemoryNonceStore),
+    /// Shared Redis/Dragonfly store (fleet-wide replay protection).
     Redis(RedisNonceStore),
 }
 

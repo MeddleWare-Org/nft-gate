@@ -20,6 +20,7 @@ interface CacheEntry {
   expiry: number
 }
 
+/** Production {@link ChainQuery} backed by Sui JSON-RPC, with an optional ownership cache. */
 export class SuiRpc implements ChainQuery {
   private readonly cache = new Map<string, CacheEntry>()
 

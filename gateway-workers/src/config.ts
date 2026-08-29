@@ -51,9 +51,12 @@ export interface Env {
   CF_ACCOUNT_ID?: string
 }
 
+/** Which nonce/rate-limit backend to use: strongly-consistent Durable Objects or Workers KV. */
 export type NonceBackendKind = 'durable-object' | 'kv'
+/** Nonce shard placement: one shard per region (near users) or a single global shard. */
 export type NonceShardMode = 'region' | 'global'
 
+/** Fully-resolved gateway configuration derived from {@link Env} by {@link loadConfig}. */
 export interface Config {
   upstreamUrl: string
   suiRpcUrl: string
@@ -139,6 +142,7 @@ export function loadConfig(env: Env): Config {
   }
 }
 
+/** Returns `true` if `path` is in the configured public-paths list (proxied without auth). */
 export function isPublicPath(cfg: Config, path: string): boolean {
   return cfg.publicPaths.some((p) => p === path)
 }

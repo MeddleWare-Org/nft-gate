@@ -7,16 +7,19 @@
 import { blake2b } from '@noble/hashes/blake2.js'
 import { sha256 as nobleSha256 } from '@noble/hashes/sha2.js'
 
+/** Compute a 32-byte Blake2b-256 digest of `data`. */
 export function blake2b256(data: Uint8Array): Uint8Array {
   return blake2b(data, { dkLen: 32 })
 }
 
+/** Compute a 32-byte SHA-256 digest of `data`. */
 export function sha256(data: Uint8Array): Uint8Array {
   return nobleSha256(data)
 }
 
 const HEX = '0123456789abcdef'
 
+/** Encode `bytes` as a lowercase hex string (no `0x` prefix). */
 export function bytesToHex(bytes: Uint8Array): string {
   let out = ''
   for (let i = 0; i < bytes.length; i++) {
@@ -25,6 +28,11 @@ export function bytesToHex(bytes: Uint8Array): string {
   return out
 }
 
+/**
+ * Decode a hex string (with or without `0x` prefix) to bytes.
+ *
+ * @throws {Error} if `hex` has an odd number of characters.
+ */
 export function hexToBytes(hex: string): Uint8Array {
   const s = hex.startsWith('0x') ? hex.slice(2) : hex
   if (s.length % 2 !== 0) throw new Error('odd-length hex')
@@ -43,6 +51,7 @@ export function base64ToBytes(b64: string): Uint8Array {
   return out
 }
 
+/** Encode `bytes` as standard base64. Uses `btoa` (present in the Workers runtime). */
 export function bytesToBase64(bytes: Uint8Array): string {
   let s = ''
   for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i])
@@ -65,6 +74,7 @@ export function uleb128(v: number): Uint8Array {
   return Uint8Array.from(out)
 }
 
+/** Concatenate multiple `Uint8Array` values into a single contiguous array. */
 export function concatBytes(...parts: Uint8Array[]): Uint8Array {
   let len = 0
   for (const p of parts) len += p.length
